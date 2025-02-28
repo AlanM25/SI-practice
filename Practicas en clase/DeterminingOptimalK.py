@@ -22,8 +22,8 @@ def Fake():
 
 #digits = load_digits()
 #digits = load_iris()
-#digits = load_wine()
-digits = fetch_olivetti_faces()
+digits = load_wine()
+#digits = fetch_olivetti_faces()
 
 data = digits.data
 labels = digits.target
@@ -37,15 +37,32 @@ train_data, test_data, train_labels, test_labels = res
 print(len(train_data), len(test_data), len(train_labels))
 
 X, Y = [], []
-for k in range(1, 25):
-    classifier = KNeighborsClassifier(n_neighbors=k,
-                                      p=2,  # Euclidian
-                                      metric="minkowski")
+Radio = 1.0
+
+while (True):
+    try:
+        classifier = RadiusNeighborsClassifier(radius=Radio)
+        classifier.fit(train_data, train_labels)
+        predictions = classifier.predict(test_data)
+    except ValueError:
+        Radio+=0.1
+    else:
+        break
+
+print("Valor del Radio", Radio)
+
+for k in range(1, 10):
+    #classifier = KNeighborsClassifier(n_neighbors=k,
+    #                                  p=2,  # Euclidian
+    #                                  metric="minkowski")
+    classifier = RadiusNeighborsClassifier(radius=Radio)
     classifier.fit(train_data, train_labels)
     predictions = classifier.predict(test_data)
     score = accuracy_score(test_labels, predictions)
-    X.append(k)
+    #X.append(k)
+    X.append(Radio)
     Y.append(score)
+    Radio += 0.5
 
 fig, ax = plt.subplots()
 ax.set_xlabel('k')
