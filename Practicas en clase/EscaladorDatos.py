@@ -12,15 +12,18 @@ dataset = pd.read_csv("resources/strange_flowers.txt",
                       header=None,
                       names=["red", "green", "blue", "size", "label"],
                       sep=" ")
-
+print(dataset)
 data = dataset.drop('label', axis=1)
 labels = dataset.label
 
 X_train, X_test, y_train, y_test = train_test_split(data, labels, random_state=0, test_size=0.2)
+print(X_train[:5])
 
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train) #  transform
 X_test = scaler.transform(X_test) #  transform
+
+print(X_train[0:5])
 
 k = int(len(X_train) ** 0.5)
 # Define the model
@@ -30,8 +33,11 @@ classifier = KNeighborsClassifier(n_neighbors=k,
                                  )
 classifier.fit(X_train, y_train)
 y_pred = classifier.predict(X_test)
-print(y_pred)
+#print(y_pred)
 
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print(accuracy_score(y_test, y_pred))
 #print(X_train)
 #print(X_test)
 
