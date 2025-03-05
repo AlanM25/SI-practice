@@ -1,6 +1,6 @@
 # Standard imports
 import cv2
-import numpy as np;
+import numpy as np
 
 #Imagen="BlobTest.jpg"
 #Imagen="Letras.jpg"
