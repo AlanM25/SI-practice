@@ -2,16 +2,17 @@ from sklearn.datasets import make_blobs
 import numpy as np
 
 n_samples = 300
+Lista = [[2, 6], [6, 2], [8, 4], [0, 0]]
 samples, labels = make_blobs(n_samples=n_samples,
-                             centers=([2, 6], [6, 2]),
+                             centers=(Lista),
                              random_state=0)
-
+NumeroClases = len(Lista)
 import matplotlib.pyplot as plt
 
 colours = ('green', 'red', 'blue', 'magenta', 'yellow', 'cyan')
 fig, ax = plt.subplots()
 
-for n_class in range(2):
+for n_class in range(NumeroClases):
     ax.scatter(samples[labels == n_class][:, 0], samples[labels == n_class][:, 1],
                c=colours[n_class], s=40, label=str(n_class))
 plt.show()
@@ -30,7 +31,7 @@ simple_network = NeuralNetwork(no_of_in_nodes=2,
                                no_of_out_nodes=2, 
                                no_of_hidden_nodes=5,
                                learning_rate=0.3,
-                               softmax=True)
+                               softmax=False)
 
 #for x in [(1, 4), (2, 6), (3, 3), (6, 2)]:
 #    y = simple_network.run(x)
